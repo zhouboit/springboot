@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jonbore.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.jonbore.entity.User">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="update_date" property="updateDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="column">
+        id,user_name,login_name,password,create_date,update_date
+    </sql>
+
+    <insert id="save">
+        insert into plat_user(
+        <include refid="column"/>
+        )
+        VALUES (#{id},#{userName},#{loginName},#{password},now(),#{updateDate})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from plat_user where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.jonbore.entity.User">
+        update plat_user s
+        <include refid="set_sql"/>
+        <if test="id != null and id != ''">
+            where s.id = #{id}
+        </if>
+    </update>
+
+    <select id="findById" parameterType="java.lang.String" resultType="com.jonbore.entity.User">
+        select
+        <include refid="column"/>
+        from plat_user s
+        where s.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="userResultMap">
+        select
+        <include refid="column"/>
+        from plat_user
+        order by create_date
+    </select>
+
+    <select id="findByMap" parameterType="com.jonbore.entity.User"  resultMap="userResultMap">
+        select
+        <include refid="column"/>
+        from plat_user s
+        <include refid="where_sql"/>
+        order by s.create_date
+    </select>
+
+    <sql id="where_sql">
+        <where>
+            1=1
+            <if test="userName != null and userName != ''">
+                <![CDATA[
+              and s.user_name = #{userName}
+            ]]>
+            </if>
+            <if test="loginName != null and loginName != ''">
+                <![CDATA[
+              and s.login_name = #{loginName}
+            ]]>
+            </if>
+            <if test="password != null and password != ''">
+                <![CDATA[
+              and s.password = #{password}
+            ]]>
+            </if>
+            <if test="createDate != null">
+                <![CDATA[
+              and s.create_date = #{createDate}
+            ]]>
+            </if>
+            <if test="updateDate != null">
+                <![CDATA[
+              and s.update_date = #{updateDate}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="set_sql">
+        <set>
+            <if test="userName != null and userName != ''">
+                <![CDATA[
+              s.user_name = #{userName},
+            ]]>
+            </if>
+            <if test="loginName != null and loginName != ''">
+                <![CDATA[
+              s.login_name = #{loginName},
+            ]]>
+            </if>
+            <if test="password != null and password != ''">
+                <![CDATA[
+              s.password = #{password},
+            ]]>
+            </if>
+            <if test="updateDate != null">
+                <![CDATA[
+              s.update_date = #{updateDate}
+            ]]>
+            </if>
+        </set>
+    </sql>
+</mapper>

@@ -46,7 +46,7 @@
         order by create_date
     </select>
 
-    <select id="findByMap" parameterType="com.jonbore.entity.User"  resultMap="userResultMap">
+    <select id="findByWhere" parameterType="com.jonbore.entity.User"  resultMap="userResultMap">
         select
         <include refid="column"/>
         from plat_user s

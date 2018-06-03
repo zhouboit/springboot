@@ -42,7 +42,7 @@ public class UserRestServer {
     }
 
     @PostMapping(value = "/creating")
-    public ViewObject creating(User user) {
+    public ViewObject creating(@RequestBody User user) {
         String id = userService.save(user);
         ViewObject viewObject = new ViewObject();
         viewObject.setCode(0);
@@ -64,7 +64,7 @@ public class UserRestServer {
     }
 
     @PutMapping(value = "/updating")
-    public ViewObject updating(User user) {
+    public ViewObject updating(@RequestBody User user) {
         boolean result = userService.update(user);
         ViewObject viewObject = new ViewObject();
         viewObject.setCode(result?0:1);
@@ -86,8 +86,8 @@ public class UserRestServer {
     }
 
     @PostMapping(value = "/findByMap")
-    public ViewObject findByMap(User user) {
-        List<User> userList = userService.findByMap(user);
+    public ViewObject findByWhere(@RequestBody User user) {
+        List<User> userList = userService.findByWhere(user);
         ViewObject viewObject = new ViewObject();
         viewObject.setCode(0);
         viewObject.setContent(userList);

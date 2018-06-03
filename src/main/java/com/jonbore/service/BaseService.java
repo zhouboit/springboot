@@ -3,7 +3,6 @@ package com.jonbore.service;
 import com.jonbore.entity.BaseEntity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author bo.zhou
@@ -56,5 +55,5 @@ public interface BaseService<T extends BaseEntity> {
      * @param entity
      * @return List<T>
      */
-    List<T> findByMap(T entity);
+    List<T> findByWhere(T entity);
 }

@@ -1,9 +1,6 @@
 package com.jonbore.mapper;
 
-import com.jonbore.entity.User;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author bo.zhou
@@ -56,5 +53,5 @@ public interface BaseMapper<T> {
      * @param entity
      * @return List<T>
      */
-    List<T> findByMap(T entity);
+    List<T> findByWhere(T entity);
 }

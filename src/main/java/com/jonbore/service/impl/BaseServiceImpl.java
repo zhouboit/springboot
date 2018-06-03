@@ -50,8 +50,8 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
     }
 
     @Override
-    public List<T> findByMap(T entity) {
-        return this.getMapper().findByMap(entity);
+    public List<T> findByWhere(T entity) {
+        return this.getMapper().findByWhere(entity);
     }
 
     public BaseMapper<T> getMapper() {
